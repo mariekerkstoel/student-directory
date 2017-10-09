@@ -22,7 +22,9 @@ def print_header
 end
 def printing(students)
   students.each_with_index{ |student,index|
+  if student[:name][0] == "D"
   puts "#{index + 1}.#{student[:name]} (#{student[:cohort]} cohort)"
+  end
 }
 end
 
