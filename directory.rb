@@ -36,19 +36,20 @@ end
 
 
 def print_header
-  puts  "The students of Villains Academy"
-  puts  "-----------"
+  line_width = 100
+  puts  ("The students of Villains Academy").center(line_width)
+  puts  ("-----------").center(line_width)
 end
 
 def printing(students)
   @new_students = 0
 while students.length != 0
   name = students.pop
-  print name[:name].capitalize + ", "
-  puts name[:cohort].to_s + " cohort"
-  puts  "This person's hobbies are: " + name[:hobbies] + " "
-  puts "Date of birth = " + name[:date] + " and they are " + name[:height] + " tall. " 
-  puts "------------------"
+  line_width = 100
+  puts (name[:name].capitalize + ", " + name[:cohort].to_s + " cohort").center(line_width)
+  puts  ("This person's hobbies are: " + name[:hobbies] + " ").center(line_width)
+  puts  ("Date of birth = " + name[:date] + " and they are " + name[:height] + " tall. ").center(line_width)
+  puts  ("------------------").center(line_width)
   @new_students += 1
     if students.length == 0
       break
@@ -57,7 +58,7 @@ while students.length != 0
 end
 
 def print_footer(students)
-puts "Overall, we have #{@new_students} great students"
+puts ("Overall, we have #{@new_students} great students").center(100)
 end
 
 
