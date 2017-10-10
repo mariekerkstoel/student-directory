@@ -13,23 +13,28 @@ def input_user
     name = gets.chomp
   end
 students
-
 end
 
 def print_header
   puts  "The students of Villains Academy"
   puts  "-----------"
 end
+
 def printing(students)
-  students.each_with_index{ |student,index|
-  if student[:name].length <= 12
-  puts "#{index + 1}.#{student[:name]} (#{student[:cohort]} cohort)"
+  @new_students = 0
+while students.length != 0
+  name = students.pop
+  print name[:name] + ", "
+  puts name[:cohort].to_s + " cohort"
+  @new_students += 1
+    if students.length == 0
+      break
+    end
   end
-}
 end
 
 def print_footer(students)
-puts "Overall, we have #{students.count} great students"
+puts "Overall, we have #{@new_students} great students"
 end
 
 
