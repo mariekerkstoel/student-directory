@@ -144,8 +144,54 @@ def print_footer(students)
 
 end
 
+def interactive_menu
+  students = []
+  loop do
+    list = ["Input the students", "Show the students", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "Exit"]
+      list.each_with_index{|x,index|
+      puts "#{index + 1}. #{x}" }
+    puts "What would you like to do? "
+    selection = gets.chomp
 
-students = input_user
-print_header
-printing_by_cohort(students)
-print_footer(students)
+    case selection
+    when "1"
+      students = input_user
+    when "2"
+      print_header
+      printing_by_cohort(students)
+      print_footer(students)
+    when "9"
+      exit
+    else
+      puts "I don't know what you meant."
+    end
+
+    end
+
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+interactive_menu
+#students = input_user
+#print_header
+#printing_by_cohort(students)
+#print_footer(students)
