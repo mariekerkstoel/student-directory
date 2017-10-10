@@ -5,22 +5,47 @@ def input_user
     puts "Please enter the name of a student"
     puts "If you are finished, press the enter button twice."
     name = gets.chomp
+    puts "What cohort are they in?"
+    cohort = gets.chomp
+    if cohort == ''
+      cohort= :november
+    end
     puts "What are this persons hobbies?"
     hobbies = gets.chomp
     puts "Date of birth?"
     date_of_birth = gets.chomp
     puts "One last thing: How tall is he?"
     height = gets.chomp
+    puts "If you are sure you haven't made a typo, just press enter. Otherwise tell me what you'd like to change!"
+    changes = gets.chomp
+    puts "Go ahead and give me the real #{changes}"
+    new_object = gets.chomp
+    if changes == "name"
+      name = new_object
+    elsif changes == "hobbies"
+      hobbies = new_object
+    elsif changes == "date of birth"
+      date_of_birth = new_object
+    elsif changes == "height"
+      height = new_object
+    elsif changes == "cohort"
+      cohort = new_object
+    end
 
   students = []
 
   while name != '' do
-    students << {name: name, cohort: :november, hobbies: hobbies, date: date_of_birth, height: height}
+    students << {name: name, cohort: cohort.to_sym, hobbies: hobbies, date: date_of_birth, height: height}
     puts "now we have #{students.count} students"
     puts "Is there any other students?"
     name = gets.chomp
     if name == ''
       break
+    end
+    puts "What cohort are they in?"
+    cohort = gets.chomp
+    if cohort == ''
+      cohort= :november
     end
     puts "What are this persons hobbies?"
     hobbies = gets.chomp
@@ -28,6 +53,21 @@ def input_user
     date_of_birth = gets.chomp
     puts "One last thing: How tall is he/she?"
     height = gets.chomp
+    puts "If you are sure you haven't made a typo, just press enter. Otherwise tell me what you'd like to change!"
+    changes = gets.chomp
+    puts "Go ahead and give me the real #{changes}"
+    new_object = gets.chomp
+    if changes == "name"
+      name = new_object
+    elsif changes == "hobbies"
+      hobbies = new_object
+    elsif changes == "date of birth"
+      date_of_birth = new_object
+    elsif changes == "height"
+      height = new_object
+    elsif changes == "cohort"
+      cohort = new_object
+    end
   end
     students
 end
