@@ -146,7 +146,7 @@ end
 
 
 def print_menu
-  list = ["Input the students", "Show the students", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "Exit"]
+  list = ["Input the students", "Show the students", "Save the list to students.csv ", "fourth", "fifth", "sixth", "seventh", "eighth", "Exit"]
     list.each_with_index{|x,index|
     puts "#{index + 1}. #{x}" }
 
@@ -164,6 +164,8 @@ def process(selection)
       input_user
     when "2"
       show_students
+    when "3"
+      save_students
     when "9"
       exit
     else
@@ -183,6 +185,19 @@ def interactive_menu
 end
 end
 
+def save_students
+  file = File.open("students.csv","w")
+  #if we want to write to a file, we need to open it.
+  @students.each do |student|
+  #then we iterate over the array, processing one student at a time
+  #on every iteration we create a new array
+    student_data = [student[:name], student[:cohort]]
+    csv_line = student_data.join(",")
+  #we write the csv line to the file
+    file.puts csv_line
+  end
+  file.close
+end
 
 
 
