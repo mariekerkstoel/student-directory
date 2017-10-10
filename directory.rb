@@ -5,45 +5,47 @@ def input_user
     puts "Please enter the name of a student"
     puts "If you are finished, press the enter button twice."
     name = gets.chomp
-    puts "What cohort are they in?"
-    cohort = gets.chomp
-    if cohort == ''
-      cohort= :november
-    end
-    puts "What are this persons hobbies?"
-    hobbies = gets.chomp
-    puts "Date of birth?"
-    date_of_birth = gets.chomp
-    puts "One last thing: How tall is he?"
-    height = gets.chomp
-    puts "If you are sure you haven't made a typo, just press enter. Otherwise tell me what you'd like to change!"
-    changes = gets.chomp
-      if changes == "name"
-        puts "Go ahead and give me the real #{changes}"
-        new_object = gets.chomp
-        name = new_object
-      elsif changes == "hobbies"
-        puts "Go ahead and give me the real #{changes}"
-        new_object = gets.chomp
-        hobbies = new_object
-      elsif changes == "date of birth"
-        puts "Go ahead and give me the real #{changes}"
-        new_object = gets.chomp
-        date_of_birth = new_object
-      elsif changes == "height"
-        puts "Go ahead and give me the real #{changes}"
-        new_object = gets.chomp
-        height = new_object
-      elsif changes == "cohort"
-        puts "Go ahead and give me the real #{changes}"
-        new_object = gets.chomp
-        cohort = new_object
+    if name != ''
+      puts "What cohort are they in?"
+      cohort = gets.chomp
+        if cohort == ''
+            cohort= :november
+        end
+      puts "What are this persons hobbies?"
+      hobbies = gets.chomp
+      puts "Date of birth?"
+      date_of_birth = gets.chomp
+      puts "One last thing: How tall is he/she?"
+      height = gets.chomp
+      puts "If you are sure you haven't made a typo, just press enter. Otherwise tell me what you'd like to change!"
+      changes = gets.chomp
+        if changes == "name"
+            puts "Go ahead and give me the real #{changes}"
+            new_object = gets.chomp
+            name = new_object
+        elsif changes == "hobbies"
+            puts "Go ahead and give me the real #{changes}"
+            new_object = gets.chomp
+            hobbies = new_object
+        elsif changes == "date of birth"
+            puts "Go ahead and give me the real #{changes}"
+            new_object = gets.chomp
+            date_of_birth = new_object
+        elsif changes == "height"
+            puts "Go ahead and give me the real #{changes}"
+            new_object = gets.chomp
+            height = new_object
+        elsif changes == "cohort"
+            puts "Go ahead and give me the real #{changes}"
+            new_object = gets.chomp
+            cohort = new_object
+        end
       end
 
   students = []
 
   while name != '' do
-    students << {name: name, cohort: cohort.to_sym, hobbies: hobbies, date: date_of_birth, height: height}
+    students << {name: name, cohort: cohort.downcase.to_sym, hobbies: hobbies, date: date_of_birth, height: height}
     puts "now we have #{students.count} student" if (students.count) == 1
     puts "now we have #{students.count} students" if students.count > 1
     puts "Is there any other students?"
@@ -99,6 +101,7 @@ end
 def printing_by_cohort(students)
   line_width = 100
   @student_count = 0
+  if students.length >= 1
   cohorts = [:january, :february, :march, :april, :may, :june, :july, :august, :september, :october, :november, :december]
   cohorts.each{|x|
     puts ("These are the students of the " + x.to_s + " cohort: ").center(line_width)
@@ -110,6 +113,9 @@ def printing_by_cohort(students)
       puts ("----------").center(line_width)
       @student_count += 1
     } }
+  else
+    puts ("There are no students at the Villain Academy!").center(line_width)
+  end
 end
 
 
