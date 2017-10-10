@@ -18,19 +18,27 @@ def input_user
     height = gets.chomp
     puts "If you are sure you haven't made a typo, just press enter. Otherwise tell me what you'd like to change!"
     changes = gets.chomp
-    puts "Go ahead and give me the real #{changes}"
-    new_object = gets.chomp
-    if changes == "name"
-      name = new_object
-    elsif changes == "hobbies"
-      hobbies = new_object
-    elsif changes == "date of birth"
-      date_of_birth = new_object
-    elsif changes == "height"
-      height = new_object
-    elsif changes == "cohort"
-      cohort = new_object
-    end
+      if changes == "name"
+        puts "Go ahead and give me the real #{changes}"
+        new_object = gets.chomp
+        name = new_object
+      elsif changes == "hobbies"
+        puts "Go ahead and give me the real #{changes}"
+        new_object = gets.chomp
+        hobbies = new_object
+      elsif changes == "date of birth"
+        puts "Go ahead and give me the real #{changes}"
+        new_object = gets.chomp
+        date_of_birth = new_object
+      elsif changes == "height"
+        puts "Go ahead and give me the real #{changes}"
+        new_object = gets.chomp
+        height = new_object
+      elsif changes == "cohort"
+        puts "Go ahead and give me the real #{changes}"
+        new_object = gets.chomp
+        cohort = new_object
+      end
 
   students = []
 
@@ -55,25 +63,31 @@ def input_user
     height = gets.chomp
     puts "If you are sure you haven't made a typo, just press enter. Otherwise tell me what you'd like to change!"
     changes = gets.chomp
-    puts "Go ahead and give me the real #{changes}"
-    new_object = gets.chomp
     if changes == "name"
+      puts "Go ahead and give me the real #{changes}"
+      new_object = gets.chomp
       name = new_object
     elsif changes == "hobbies"
+      puts "Go ahead and give me the real #{changes}"
+      new_object = gets.chomp
       hobbies = new_object
     elsif changes == "date of birth"
+      puts "Go ahead and give me the real #{changes}"
+      new_object = gets.chomp
       date_of_birth = new_object
     elsif changes == "height"
+      puts "Go ahead and give me the real #{changes}"
+      new_object = gets.chomp
       height = new_object
     elsif changes == "cohort"
+      puts "Go ahead and give me the real #{changes}"
+      new_object = gets.chomp
       cohort = new_object
     end
+
   end
     students
 end
-
-
-
 
 def print_header
   line_width = 100
@@ -81,28 +95,43 @@ def print_header
   puts  ("-----------").center(line_width)
 end
 
+def printing_by_cohort(students)
+  line_width = 100
+  cohorts = [:january, :february, :march, :april, :may, :june, :july, :august, :september, :october, :november, :december]
+  cohorts.each{|x|
+    puts ("These are the students of the " + x.to_s + " cohort.").center(line_width)
+    puts ("----------").center(line_width)
+    students_cohort = students.select{|hash| hash[:cohort] == x }
+    students_cohort.each{|name|
+      puts  (name[:name].capitalize + ", " + name[:cohort].to_s + " cohort").center(line_width)
+      puts  ("This person's hobbies are: " + name[:hobbies] + " ").center(line_width)
+      puts  ("Date of birth = " + name[:date] + " and they are " + name[:height] + " tall. ").center(line_width)
+    } }
+end
+
+
 def printing(students)
-  @new_students = 0
-while students.length != 0
+  @student_count = 0
+  while students.length != 0 do
   name = students.pop
   line_width = 100
   puts (name[:name].capitalize + ", " + name[:cohort].to_s + " cohort").center(line_width)
   puts  ("This person's hobbies are: " + name[:hobbies] + " ").center(line_width)
   puts  ("Date of birth = " + name[:date] + " and they are " + name[:height] + " tall. ").center(line_width)
   puts  ("------------------").center(line_width)
-  @new_students += 1
-    if students.length == 0
-      break
-    end
+  @student_count += 1
+  if students.length == 0
+    break
   end
+end
 end
 
 def print_footer(students)
-puts ("Overall, we have #{@new_students} great students").center(100)
+puts ("Overall, we have #{@student_count} great students").center(100)
 end
 
 
 students = input_user
 print_header
-printing(students)
+printing_by_cohort(students)
 print_footer(students)
