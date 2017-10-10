@@ -44,7 +44,8 @@ def input_user
 
   while name != '' do
     students << {name: name, cohort: cohort.to_sym, hobbies: hobbies, date: date_of_birth, height: height}
-    puts "now we have #{students.count} students"
+    puts "now we have #{students.count} student" if (students.count) == 1
+    puts "now we have #{students.count} students" if students.count > 1
     puts "Is there any other students?"
     name = gets.chomp
     if name == ''
@@ -97,15 +98,17 @@ end
 
 def printing_by_cohort(students)
   line_width = 100
+  @student_count = 0
   cohorts = [:january, :february, :march, :april, :may, :june, :july, :august, :september, :october, :november, :december]
   cohorts.each{|x|
-    puts ("These are the students of the " + x.to_s + " cohort.").center(line_width)
-    puts ("----------").center(line_width)
+    puts ("These are the students of the " + x.to_s + " cohort: ").center(line_width)
     students_cohort = students.select{|hash| hash[:cohort] == x }
     students_cohort.each{|name|
       puts  (name[:name].capitalize + ", " + name[:cohort].to_s + " cohort").center(line_width)
       puts  ("This person's hobbies are: " + name[:hobbies] + " ").center(line_width)
       puts  ("Date of birth = " + name[:date] + " and they are " + name[:height] + " tall. ").center(line_width)
+      puts ("----------").center(line_width)
+      @student_count += 1
     } }
 end
 
@@ -127,7 +130,12 @@ end
 end
 
 def print_footer(students)
-puts ("Overall, we have #{@student_count} great students").center(100)
+  if @student_count == 1
+      puts ("Overall, we have #{@student_count} great student.").center(100)
+  elsif @student_count > 1
+      puts ("Overall, we have #{@student_count} great students.").center(100)
+  end
+
 end
 
 
