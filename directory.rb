@@ -146,7 +146,7 @@ end
 
 
 def print_menu
-  list = ["Input the students", "Show the students", "Save the list to students.csv ", "fourth", "fifth", "sixth", "seventh", "eighth", "Exit"]
+  list = ["Input the students", "Show the students", "Save the list to students.csv ", "Load the list from students.csv ", "fifth", "sixth", "seventh", "eighth", "Exit"]
     list.each_with_index{|x,index|
     puts "#{index + 1}. #{x}" }
 
@@ -166,6 +166,8 @@ def process(selection)
       show_students
     when "3"
       save_students
+    when "4"
+      load_students
     when "9"
       exit
     else
@@ -200,8 +202,14 @@ def save_students
 end
 
 
-
-
+def load_students
+  file = File.open("students.csv", "r") #open file + specify that you're reading it
+  file.readlines.each do |line| #read all lines into an array and iterate over it
+    name, cohort = line.chomp.split(',') #assign it to two variables
+    @students << {name: name, cohort: cohort.to_sym} #create a new hash and put it in the list of students
+  end
+  file.close
+end
 
 
 
