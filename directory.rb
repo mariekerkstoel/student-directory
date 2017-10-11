@@ -11,30 +11,30 @@ def input_user
         if cohort == ''
             cohort= :november
         end
-      puts "What are this persons hobbies?"
-      hobbies = STDIN.gets.chomp
-      puts "Date of birth?"
-      date_of_birth = STDIN.gets.chomp
-      puts "One last thing: How tall is he/she?"
-      height = STDIN.gets.chomp
+      #puts "What are this persons hobbies?"
+      #hobbies = STDIN.gets.chomp
+      #puts "Date of birth?"
+      #date_of_birth = STDIN.gets.chomp
+      #puts "One last thing: How tall is he/she?"
+      #height = STDIN.gets.chomp
       puts "If you are sure you haven't made a typo, just press enter. Otherwise tell me what you'd like to change!"
       changes = STDIN.gets.chomp
         if changes == "name"
             puts "Go ahead and give me the real #{changes}"
             new_object = STDIN.gets.chomp
             name = new_object
-        elsif changes == "hobbies"
-            puts "Go ahead and give me the real #{changes}"
-            new_object = STDIN.gets.chomp
-            hobbies = new_object
-        elsif changes == "date of birth"
-            puts "Go ahead and give me the real #{changes}"
-            new_object = STDIN.gets.chomp
-            date_of_birth = new_object
-        elsif changes == "height"
-            puts "Go ahead and give me the real #{changes}"
-            new_object = STDIN.gets.chomp
-            height = new_object
+        #elsif changes == "hobbies"
+        #    puts "Go ahead and give me the real #{changes}"
+        #    new_object = STDIN.gets.chomp
+        #    hobbies = new_object
+        #elsif changes == "date of birth"
+        #    puts "Go ahead and give me the real #{changes}"
+        #    new_object = STDIN.gets.chomp
+        #    date_of_birth = new_object
+        #elsif changes == "height"
+        #    puts "Go ahead and give me the real #{changes}"
+        #    new_object = STDIN.gets.chomp
+        #    height = new_object
         elsif changes == "cohort"
             puts "Go ahead and give me the real #{changes}"
             new_object = STDIN.gets.chomp
@@ -44,7 +44,7 @@ def input_user
 
 
   while name != '' do
-    @students << {name: name, cohort: cohort.downcase.to_sym, hobbies: hobbies, date: date_of_birth, height: height}
+    input_to_students(name,cohort)
     puts "now we have #{@students.count} student" if (@students.count) == 1
     puts "now we have #{@students.count} students" if @students.count > 1
     puts "Is there any other students?"
@@ -57,36 +57,33 @@ def input_user
     if cohort == ''
       cohort= :november
     end
-    puts "What are this persons hobbies?"
-    hobbies = STDIN.gets.chomp
-    puts "Date of birth?"
-    date_of_birth = STDIN.gets.chomp
-    puts "One last thing: How tall is he/she?"
-    height = STDIN.gets.chomp
+    #puts "What are this persons hobbies?"
+    #hobbies = STDIN.gets.chomp
+    #puts "Date of birth?"
+    #date_of_birth = STDIN.gets.chomp
+    #puts "One last thing: How tall is he/she?"
+    #height = STDIN.gets.chomp
     puts "If you are sure you haven't made a typo, just press enter. Otherwise tell me what you'd like to change!"
     changes = STDIN.gets.chomp
     if changes == "name"
       puts "Go ahead and give me the real #{changes}"
       new_object = STDIN.gets.chomp
       name = new_object
-    elsif changes == "hobbies"
-      puts "Go ahead and give me the real #{changes}"
-      new_object = STDIN.gets.chomp
-      hobbies = new_object
-    elsif changes == "date of birth"
-      puts "Go ahead and give me the real #{changes}"
-      new_object = STDIN.gets.chomp
-      date_of_birth = new_object
-    elsif changes == "height"
-      puts "Go ahead and give me the real #{changes}"
-      new_object = STDIN.gets.chomp
-      height = new_object
+    #elsif changes == "hobbies"
+    #  puts "Go ahead and give me the real #{changes}"
+    #  new_object = STDIN.gets.chomp
+    #  hobbies = new_object
+    #elsif changes == "date of birth"
+    #date_of_birth = new_object
+    #elsif changes == "height"
+    #  puts "Go ahead and give me the real #{changes}"
+    #  new_object = STDIN.gets.chomp
+    #  height = new_object
     elsif changes == "cohort"
       puts "Go ahead and give me the real #{changes}"
       new_object = STDIN.gets.chomp
       cohort = new_object
     end
-
   end
     @students
 end
@@ -101,7 +98,7 @@ def printing_by_cohort
   line_width = 100
   @student_count = 0
   if @students.length >= 1
-  cohorts = [:january, :february, :march, :april, :may, :june, :july, :august, :september, :october, :november, :december]
+  cohorts = [:January, :February, :March, :April, :May, :June, :July, :August, :September, :October, :November, :December]
   cohorts.each{|x|
     puts ("These are the students of the " + x.to_s + " cohort: ").center(line_width)
     students_cohort = @students.select{|hash| hash[:cohort] == x }
@@ -207,7 +204,7 @@ def load_students(filename = "students.csv")
   file = File.open(filename, "r") #open file + specify that you're reading it
   file.readlines.each do |line| #read all lines into an array and iterate over it
     name, cohort = line.chomp.split(',') #assign it to two variables
-    @students << {name: name, cohort: cohort.to_sym} #create a new hash and put it in the list of students
+    input_to_students(name, cohort) #create a new hash and put it in the list of students
   end
   file.close
 end
@@ -239,6 +236,9 @@ end
 #gets actually returns the next line from the list of files in ARGV or from standard input(keyboard input)
 #if no aruments are given. So we need to specify that gets should read from standard input stream.
 
+def input_to_students(value1, value2)
+  @students << {name: value1, cohort: value2.capitalize.to_sym}
+end
 
 
 
