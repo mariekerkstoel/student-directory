@@ -4,40 +4,40 @@ def input_user
 
     puts "Please enter the name of a student"
     puts "If you are finished, press the enter button twice."
-    name = gets.chomp
+    name = STDIN.gets.chomp
     if name != ''
       puts "What cohort are they in?"
-      cohort = gets.chomp
+      cohort = STDIN.gets.chomp
         if cohort == ''
             cohort= :november
         end
       puts "What are this persons hobbies?"
-      hobbies = gets.chomp
+      hobbies = STDIN.gets.chomp
       puts "Date of birth?"
-      date_of_birth = gets.chomp
+      date_of_birth = STDIN.gets.chomp
       puts "One last thing: How tall is he/she?"
-      height = gets.chomp
+      height = STDIN.gets.chomp
       puts "If you are sure you haven't made a typo, just press enter. Otherwise tell me what you'd like to change!"
-      changes = gets.chomp
+      changes = STDIN.gets.chomp
         if changes == "name"
             puts "Go ahead and give me the real #{changes}"
-            new_object = gets.chomp
+            new_object = STDIN.gets.chomp
             name = new_object
         elsif changes == "hobbies"
             puts "Go ahead and give me the real #{changes}"
-            new_object = gets.chomp
+            new_object = STDIN.gets.chomp
             hobbies = new_object
         elsif changes == "date of birth"
             puts "Go ahead and give me the real #{changes}"
-            new_object = gets.chomp
+            new_object = STDIN.gets.chomp
             date_of_birth = new_object
         elsif changes == "height"
             puts "Go ahead and give me the real #{changes}"
-            new_object = gets.chomp
+            new_object = STDIN.gets.chomp
             height = new_object
         elsif changes == "cohort"
             puts "Go ahead and give me the real #{changes}"
-            new_object = gets.chomp
+            new_object = STDIN.gets.chomp
             cohort = new_object
         end
       end
@@ -48,42 +48,42 @@ def input_user
     puts "now we have #{@students.count} student" if (@students.count) == 1
     puts "now we have #{@students.count} students" if @students.count > 1
     puts "Is there any other students?"
-    name = gets.chomp
+    name = STDIN.gets.chomp
     if name == ''
       break
     end
     puts "What cohort are they in?"
-    cohort = gets.chomp
+    cohort = STDIN.gets.chomp
     if cohort == ''
       cohort= :november
     end
     puts "What are this persons hobbies?"
-    hobbies = gets.chomp
+    hobbies = STDIN.gets.chomp
     puts "Date of birth?"
-    date_of_birth = gets.chomp
+    date_of_birth = STDIN.gets.chomp
     puts "One last thing: How tall is he/she?"
-    height = gets.chomp
+    height = STDIN.gets.chomp
     puts "If you are sure you haven't made a typo, just press enter. Otherwise tell me what you'd like to change!"
-    changes = gets.chomp
+    changes = STDIN.gets.chomp
     if changes == "name"
       puts "Go ahead and give me the real #{changes}"
-      new_object = gets.chomp
+      new_object = STDIN.gets.chomp
       name = new_object
     elsif changes == "hobbies"
       puts "Go ahead and give me the real #{changes}"
-      new_object = gets.chomp
+      new_object = STDIN.gets.chomp
       hobbies = new_object
     elsif changes == "date of birth"
       puts "Go ahead and give me the real #{changes}"
-      new_object = gets.chomp
+      new_object = STDIN.gets.chomp
       date_of_birth = new_object
     elsif changes == "height"
       puts "Go ahead and give me the real #{changes}"
-      new_object = gets.chomp
+      new_object = STDIN.gets.chomp
       height = new_object
     elsif changes == "cohort"
       puts "Go ahead and give me the real #{changes}"
-      new_object = gets.chomp
+      new_object = STDIN.gets.chomp
       cohort = new_object
     end
 
@@ -166,6 +166,7 @@ def process(selection)
       show_students
     when "3"
       save_students
+      puts "Saved!"
     when "4"
       load_students
     when "9"
@@ -183,7 +184,7 @@ def interactive_menu
   loop do
     print_menu
     puts "What would you like to do? "
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
 end
 end
 
@@ -202,8 +203,8 @@ def save_students
 end
 
 
-def load_students
-  file = File.open("students.csv", "r") #open file + specify that you're reading it
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r") #open file + specify that you're reading it
   file.readlines.each do |line| #read all lines into an array and iterate over it
     name, cohort = line.chomp.split(',') #assign it to two variables
     @students << {name: name, cohort: cohort.to_sym} #create a new hash and put it in the list of students
@@ -212,6 +213,31 @@ def load_students
 end
 
 
+#When a program is launched, there's no way of knowing how many arguments will be passed to it, let alone their names.
+#Therefore, we have to access them by their index.
+#ARGV = is a variable that contains the arguments passed to a program through the command line
+#Manifests as an array so you access the objects like you would access objects of an array!
+# If we pass the filename as an argument, we can load the data from there automatically:
+# ruby directory.rb students.csv : filename is passed as an argument.
+#To acces the argument : ARGV[0] or ARGV.first
+
+def try_load_students
+  filename = ARGV.first
+  return if filename.nil? #get out of the method if argument isn't given.
+    if File.exist?(filename) #checking if file exists
+      load_students(filename)
+      puts "Loaded #{@students.count} from #{filename}"
+    else
+      puts "Sorry, #{filename} doesn't exist"
+    end
+end
+
+
+
+
+#Why we have to use STDIN.gets instead of gets:
+#gets actually returns the next line from the list of files in ARGV or from standard input(keyboard input)
+#if no aruments are given. So we need to specify that gets should read from standard input stream.
 
 
 
@@ -221,11 +247,7 @@ end
 
 
 
-
-
-
-
-
+try_load_students
 interactive_menu
 #students = input_user
 #print_header
