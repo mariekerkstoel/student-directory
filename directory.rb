@@ -9,32 +9,14 @@ def input_user
       puts "What cohort are they in?"
       cohort = STDIN.gets.chomp
         if cohort == ''
-            cohort= :november
+            cohort = :november
         end
-      #puts "What are this persons hobbies?"
-      #hobbies = STDIN.gets.chomp
-      #puts "Date of birth?"
-      #date_of_birth = STDIN.gets.chomp
-      #puts "One last thing: How tall is he/she?"
-      #height = STDIN.gets.chomp
       puts "If you are sure you haven't made a typo, just press enter. Otherwise tell me what you'd like to change!"
       changes = STDIN.gets.chomp
         if changes == "name"
             puts "Go ahead and give me the real #{changes}"
             new_object = STDIN.gets.chomp
             name = new_object
-        #elsif changes == "hobbies"
-        #    puts "Go ahead and give me the real #{changes}"
-        #    new_object = STDIN.gets.chomp
-        #    hobbies = new_object
-        #elsif changes == "date of birth"
-        #    puts "Go ahead and give me the real #{changes}"
-        #    new_object = STDIN.gets.chomp
-        #    date_of_birth = new_object
-        #elsif changes == "height"
-        #    puts "Go ahead and give me the real #{changes}"
-        #    new_object = STDIN.gets.chomp
-        #    height = new_object
         elsif changes == "cohort"
             puts "Go ahead and give me the real #{changes}"
             new_object = STDIN.gets.chomp
@@ -49,43 +31,41 @@ def input_user
     puts "now we have #{@students.count} students" if @students.count > 1
     puts "Is there any other students?"
     name = STDIN.gets.chomp
-    if name == ''
-      break
-    end
-    puts "What cohort are they in?"
-    cohort = STDIN.gets.chomp
-    if cohort == ''
-      cohort= :november
-    end
-    #puts "What are this persons hobbies?"
-    #hobbies = STDIN.gets.chomp
-    #puts "Date of birth?"
-    #date_of_birth = STDIN.gets.chomp
-    #puts "One last thing: How tall is he/she?"
-    #height = STDIN.gets.chomp
-    puts "If you are sure you haven't made a typo, just press enter. Otherwise tell me what you'd like to change!"
-    changes = STDIN.gets.chomp
-    if changes == "name"
-      puts "Go ahead and give me the real #{changes}"
-      new_object = STDIN.gets.chomp
-      name = new_object
-    #elsif changes == "hobbies"
-    #  puts "Go ahead and give me the real #{changes}"
-    #  new_object = STDIN.gets.chomp
-    #  hobbies = new_object
-    #elsif changes == "date of birth"
-    #date_of_birth = new_object
-    #elsif changes == "height"
-    #  puts "Go ahead and give me the real #{changes}"
-    #  new_object = STDIN.gets.chomp
-    #  height = new_object
-    elsif changes == "cohort"
-      puts "Go ahead and give me the real #{changes}"
-      new_object = STDIN.gets.chomp
-      cohort = new_object
-    end
+    if name != ''
+      puts "What cohort are they in?"
+      cohort = STDIN.gets.chomp
+        if cohort == ''
+            cohort = :november
+        end
+      puts "If you are sure you haven't made a typo, just press enter. Otherwise tell me what you'd like to change!"
+      changes = STDIN.gets.chomp
+        if changes == "name"
+            puts "Go ahead and give me the real #{changes}"
+            new_object = STDIN.gets.chomp
+            name = new_object
+        elsif changes == "cohort"
+            puts "Go ahead and give me the real #{changes}"
+            new_object = STDIN.gets.chomp
+            cohort = new_object
+        end
+      end
   end
     @students
+end
+
+
+
+def getting_more_info(input)
+  puts "What is this person's #{input}?"
+  input = STDIN.gets.chomp
+end
+
+def changing_more_info(input)
+  if changes == input
+     puts "Go ahead and give me the real #{changes}"
+     new_object = STDIN.gets.chomp
+     input = new_object
+  end
 end
 
 def print_header
@@ -116,37 +96,33 @@ end
 
 
 def printing
-  @student_count = 0
-  while @students.length != 0 do
-  name = @students.pop
-  line_width = 100
-  puts (name[:name].capitalize + ", " + name[:cohort].to_s + " cohort").center(line_width)
-  # uncover this code if you'd like to show this person's extra information
-  #puts  ("This person's hobbies are: " + name[:hobbies] + " ").center(line_width)
-  #puts  ("Date of birth = " + name[:date] + " and they are " + name[:height] + " tall. ").center(line_width)
-  puts  ("------------------").center(line_width)
-  @student_count += 1
-  if @students.length == 0
-    break
-  end
-end
+    @student_count = 0
+      while @students.length != 0 do
+        name = @students.pop
+        line_width = 100
+        puts (name[:name].capitalize + ", " + name[:cohort].to_s + " cohort").center(line_width)
+        # uncover this code if you'd like to show this person's extra information
+        #puts  ("This person's hobbies are: " + name[:hobbies] + " ").center(line_width)
+        #puts  ("Date of birth = " + name[:date] + " and they are " + name[:height] + " tall. ").center(line_width)
+        puts  ("------------------").center(line_width)
+        @student_count += 1
+          if @students.length == 0
+            break
+          end
+      end
 end
 
 def print_footer
-  if @student_count == 1
-      puts ("Overall, we have #{@student_count} great student.").center(100)
-  elsif @student_count > 1
-      puts ("Overall, we have #{@student_count} great students.").center(100)
-  end
-
+  puts ("Overall, we have #{@student_count} great student.").center(100) if @student_count == 1
+  puts ("Overall, we have #{@student_count} great students.").center(100) if @student_count > 1
 end
+
 
 
 def print_menu
   list = ["Input the students", "Show the students", "Save the list to students.csv ", "Load the list from students.csv ", "fifth", "sixth", "seventh", "eighth", "Exit"]
     list.each_with_index{|x,index|
     puts "#{index + 1}. #{x}" }
-
 end
 
 def show_students
@@ -159,17 +135,26 @@ def process(selection)
   case selection
     when "1"
       input_user
+      puts "Input succesful!"
+      puts ''
     when "2"
       show_students
+      puts "You were just shown the existing students!"
+      puts ''
     when "3"
       save_students
       puts "Saved!"
+      puts ''
     when "4"
       load_students
+      puts "File loaded!"
+      puts ''
     when "9"
+      puts "You have just exited the program."
       exit
     else
       puts "I don't know what you meant."
+      puts ''
   end
 end
 
@@ -182,7 +167,7 @@ def interactive_menu
     print_menu
     puts "What would you like to do? "
     process(STDIN.gets.chomp)
-end
+  end
 end
 
 def save_students
@@ -209,7 +194,6 @@ def load_students(filename = "students.csv")
   file.close
 end
 
-
 #When a program is launched, there's no way of knowing how many arguments will be passed to it, let alone their names.
 #Therefore, we have to access them by their index.
 #ARGV = is a variable that contains the arguments passed to a program through the command line
@@ -228,8 +212,6 @@ def try_load_students
       puts "Sorry, #{filename} doesn't exist"
     end
 end
-
-
 
 
 #Why we have to use STDIN.gets instead of gets:
