@@ -146,7 +146,7 @@ def process(selection)
       puts "Saved!"
       puts ''
     when "4"
-      load_students
+      students_load_from_file
       puts "File loaded!"
       puts ''
     when "9"
@@ -171,7 +171,9 @@ def interactive_menu
 end
 
 def save_students
-  file = File.open("students.csv","w")
+  puts "Which file would you like to save to?"
+  file_to_save = STDIN.gets.chomp
+  file = File.open(file_to_save,"w")
   #if we want to write to a file, we need to open it.
   @students.each do |student|
   #then we iterate over the array, processing one student at a time
@@ -194,6 +196,14 @@ def load_students(filename = "students.csv")
   file.close
 end
 
+def students_load_from_file
+  puts "Which file would you like to load from?"
+    file_to_load = STDIN.gets.chomp
+  if !File.exist?(file_to_load)
+    file_to_load = "students.csv"
+  end
+  load_students(file_to_load)
+end
 #When a program is launched, there's no way of knowing how many arguments will be passed to it, let alone their names.
 #Therefore, we have to access them by their index.
 #ARGV = is a variable that contains the arguments passed to a program through the command line
