@@ -1,4 +1,5 @@
 
+require "csv"
 @students = []
 def input_user
 
@@ -172,7 +173,9 @@ end
 
 def save_students
   puts "Which file would you like to save to?"
-  file_to_save = STDIN.gets.chomp
+  save_csv_file(STDIN.gets.chomp)
+end
+=begin  file_to_save = STDIN.gets.chomp
   file = File.open(file_to_save,"w")
   #if we want to write to a file, we need to open it.
   @students.each do |student|
@@ -185,6 +188,7 @@ def save_students
   end
   file.close
 end
+=end
 
 
 def load_students(filename = "students.csv")
@@ -212,7 +216,7 @@ end
 # ruby directory.rb students.csv : filename is passed as an argument.
 #To acces the argument : ARGV[0] or ARGV.first
 
-def try_load_students
+=begin def try_load_students
   filename = ARGV.first
   return if filename.nil? #get out of the method if argument isn't given.
     if File.exist?(filename) #checking if file exists
@@ -222,6 +226,7 @@ def try_load_students
       puts "Sorry, #{filename} doesn't exist"
     end
 end
+=end
 
 
 #Why we have to use STDIN.gets instead of gets:
@@ -232,6 +237,15 @@ def input_to_students(value1, value2)
   @students << {name: value1, cohort: value2.capitalize.to_sym}
 end
 
+def save_csv_file(filename)
+  CSV.open(filename,"w") do |f|
+    @students.each do|student|
+      student_data = [student[:name], student[:cohort]]
+      #we write the csv line to the file
+      f << student_data
+      end
+    end
+  end
 
 
 
@@ -239,7 +253,9 @@ end
 
 
 
-try_load_students
+
+
+
 interactive_menu
 #students = input_user
 #print_header
