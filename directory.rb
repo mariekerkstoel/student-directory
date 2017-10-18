@@ -200,13 +200,20 @@ def load_students(filename = "students.csv")
   file.close
 end
 
+def load_students_csv(file_to_load)
+  CSV.foreach(file_to_load) do |name, cohort|
+    input_to_students(name, cohort)
+  end
+end
+
+
 def students_load_from_file
   puts "Which file would you like to load from?"
     file_to_load = STDIN.gets.chomp
   if !File.exist?(file_to_load)
     file_to_load = "students.csv"
   end
-  load_students(file_to_load)
+  load_students_csv(file_to_load)
 end
 #When a program is launched, there's no way of knowing how many arguments will be passed to it, let alone their names.
 #Therefore, we have to access them by their index.
